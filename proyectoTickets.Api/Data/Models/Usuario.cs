@@ -15,9 +15,9 @@ namespace proyectoTickets.Api.Data.Models
         public required string TipoUsuario { get; set; } // "empleado" o "cliente"
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
-        public ICollection<Ticket> TicketsCreados { get; set; } = new List<Ticket>();
-        public ICollection<Ticket> TicketsAsignados { get; set; } = new List<Ticket>();
-        public ICollection<HistorialTicket> Historiales { get; set; } = new List<HistorialTicket>();
-        public ICollection<ComentarioTicket> Comentarios { get; set; } = new List<ComentarioTicket>();
+        public virtual ICollection<Ticket> TicketsCreados { get; set; } = new List<Ticket>();
+        public virtual ICollection<Ticket> TicketsAsignados { get; set; } = new List<Ticket>();
+        public virtual ICollection<HistorialTicket> Historiales { get; set; } = new List<HistorialTicket>();
+        public virtual ICollection<ComentarioTicket> Comentarios { get; set; } = new List<ComentarioTicket>();
     }
 }
