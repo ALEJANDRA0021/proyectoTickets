@@ -21,17 +21,19 @@ namespace proyectoTickets.Api.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.Cliente)
-                .WithMany() // or .WithMany(u => u.TicketsCreados) if inverse is needed
-                .HasForeignKey(t => t.UsuarioId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete if needed
-
-            modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.EmpleadoAsignado)
-                .WithMany() // or .WithMany(u => u.TicketsAsignados)
-                .HasForeignKey(t => t.EmpleadoAsignadoId)
+            modelBuilder.Entity<ComentarioTicket>()
+                .HasOne(c => c.Usuario)
+                .WithMany()
+                .HasForeignKey(c => c.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<HistorialTicket>()
+                 .HasOne(h => h.Usuario)
+                 .WithMany()
+                 .HasForeignKey(h => h.UsuarioId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }

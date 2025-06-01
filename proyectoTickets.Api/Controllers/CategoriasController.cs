@@ -43,14 +43,14 @@ namespace proyectoTickets.Api.Controllers
             await _repository.AddAsync(categoria);
             await _repository.SaveAsync();
 
-            return CreatedAtAction(nameof(GetCategoria), new { id = categoria.CategoriaId }, categoria);
+            return CreatedAtAction(nameof(GetCategoria), new { id = categoria.Id }, categoria);
         }
 
         // PUT: api/Categorias/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategoria(int id, Categoria categoria)
         {
-            if (id != categoria.CategoriaId)
+            if (id != categoria.Id)
             {
                 return BadRequest();
             }

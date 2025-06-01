@@ -12,8 +12,8 @@ using proyectoTickets.Api.Data;
 namespace proyectoTickets.Api.Migrations
 {
     [DbContext(typeof(CompanyContextDB))]
-    [Migration("20250531201840_AddEntities")]
-    partial class AddEntities
+    [Migration("20250601165105_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace proyectoTickets.Api.Migrations
 
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.Categoria", b =>
                 {
-                    b.Property<int>("CategoriaId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -41,18 +41,18 @@ namespace proyectoTickets.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoriaId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.ComentarioTicket", b =>
                 {
-                    b.Property<int>("ComentarioId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComentarioId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comentario")
                         .IsRequired()
@@ -67,7 +67,7 @@ namespace proyectoTickets.Api.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.HasKey("ComentarioId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TicketId");
 
@@ -115,11 +115,11 @@ namespace proyectoTickets.Api.Migrations
 
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.HistorialTicket", b =>
                 {
-                    b.Property<int>("HistorialId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HistorialId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -138,7 +138,7 @@ namespace proyectoTickets.Api.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.HasKey("HistorialId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TicketId");
 
@@ -149,13 +149,16 @@ namespace proyectoTickets.Api.Migrations
 
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.Ticket", b =>
                 {
-                    b.Property<int>("TicketId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
@@ -183,37 +186,24 @@ namespace proyectoTickets.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioId2")
-                        .HasColumnType("int");
-
-                    b.HasKey("TicketId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 
+                    b.HasIndex("ClienteId");
+
                     b.HasIndex("EmpleadoAsignadoId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.HasIndex("UsuarioId1");
-
-                    b.HasIndex("UsuarioId2");
 
                     b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.Usuario", b =>
                 {
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -234,7 +224,7 @@ namespace proyectoTickets.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UsuarioId");
+                    b.HasKey("Id");
 
                     b.ToTable("Usuarios");
                 });
@@ -242,15 +232,15 @@ namespace proyectoTickets.Api.Migrations
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.ComentarioTicket", b =>
                 {
                     b.HasOne("proyectoTickets.Api.Data.Models.Ticket", "Ticket")
-                        .WithMany("Comentarios")
+                        .WithMany()
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("proyectoTickets.Api.Data.Models.Usuario", "Usuario")
-                        .WithMany("Comentarios")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -261,15 +251,15 @@ namespace proyectoTickets.Api.Migrations
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.HistorialTicket", b =>
                 {
                     b.HasOne("proyectoTickets.Api.Data.Models.Ticket", "Ticket")
-                        .WithMany("Historial")
+                        .WithMany()
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("proyectoTickets.Api.Data.Models.Usuario", "Usuario")
-                        .WithMany("Historiales")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -285,24 +275,15 @@ namespace proyectoTickets.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("proyectoTickets.Api.Data.Models.Usuario", "EmpleadoAsignado")
-                        .WithMany()
-                        .HasForeignKey("EmpleadoAsignadoId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("proyectoTickets.Api.Data.Models.Usuario", "Cliente")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("proyectoTickets.Api.Data.Models.Usuario", null)
-                        .WithMany("TicketsAsignados")
-                        .HasForeignKey("UsuarioId1");
-
-                    b.HasOne("proyectoTickets.Api.Data.Models.Usuario", null)
-                        .WithMany("TicketsCreados")
-                        .HasForeignKey("UsuarioId2");
+                    b.HasOne("proyectoTickets.Api.Data.Models.Usuario", "EmpleadoAsignado")
+                        .WithMany()
+                        .HasForeignKey("EmpleadoAsignadoId");
 
                     b.Navigation("Categoria");
 
@@ -314,24 +295,6 @@ namespace proyectoTickets.Api.Migrations
             modelBuilder.Entity("proyectoTickets.Api.Data.Models.Categoria", b =>
                 {
                     b.Navigation("Tickets");
-                });
-
-            modelBuilder.Entity("proyectoTickets.Api.Data.Models.Ticket", b =>
-                {
-                    b.Navigation("Comentarios");
-
-                    b.Navigation("Historial");
-                });
-
-            modelBuilder.Entity("proyectoTickets.Api.Data.Models.Usuario", b =>
-                {
-                    b.Navigation("Comentarios");
-
-                    b.Navigation("Historiales");
-
-                    b.Navigation("TicketsAsignados");
-
-                    b.Navigation("TicketsCreados");
                 });
 #pragma warning restore 612, 618
         }

@@ -45,14 +45,14 @@ namespace proyectoTickets.Api.Controllers
             await _repository.AddAsync(comentario);
             await _repository.SaveAsync();
 
-            return CreatedAtAction(nameof(GetComentario), new { id = comentario.ComentarioId }, comentario);
+            return CreatedAtAction(nameof(GetComentario), new { id = comentario.Id }, comentario);
         }
 
         // PUT: api/ComentariosTicket/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComentario(int id, ComentarioTicket comentario)
         {
-            if (id != comentario.ComentarioId)
+            if (id != comentario.Id)
             {
                 return BadRequest();
             }

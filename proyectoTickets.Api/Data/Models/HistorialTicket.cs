@@ -7,7 +7,7 @@ namespace proyectoTickets.Api.Data.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int HistorialId { get; set; }
+        public int Id { get; set; }
         public required string Descripcion { get; set; }
         public required string Estado { get; set; } // "Abierto", "En Proceso", "Cerrado"
         public DateTime Fecha { get; set; } = DateTime.UtcNow;

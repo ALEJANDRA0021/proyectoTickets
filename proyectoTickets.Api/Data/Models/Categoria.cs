@@ -7,10 +7,10 @@ namespace proyectoTickets.Api.Data.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoriaId { get; set; }
+        public int Id { get; set; }
         public required string Nombre { get; set; }
         public required string Prioridad { get; set; } // "Baja", "Media", "Alta"
 
-        //public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }

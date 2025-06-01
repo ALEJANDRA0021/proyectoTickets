@@ -45,14 +45,14 @@ namespace proyectoTickets.Api.Controllers
             await _repository.AddAsync(usuario);
             await _repository.SaveAsync();
 
-            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.UsuarioId }, usuario);
+            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
         }
 
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != usuario.UsuarioId)
+            if (id != usuario.Id)
             {
                 return BadRequest();
             }

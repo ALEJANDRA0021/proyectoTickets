@@ -47,14 +47,14 @@ namespace proyectoTickets.Api.Controllers
             await _repository.AddAsync(ticket);
             await _repository.SaveAsync();
 
-            return CreatedAtAction(nameof(GetTicket), new { id = ticket.TicketId }, ticket);
+            return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
         }
 
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTicket(int id, Ticket ticket)
         {
-            if (id != ticket.TicketId)
+            if (id != ticket.Id)
             {
                 return BadRequest();
             }
@@ -70,7 +70,7 @@ namespace proyectoTickets.Api.Controllers
             existing.Estado = ticket.Estado;
             existing.Prioridad = ticket.Prioridad;
             existing.FechaActualizacion = DateTime.UtcNow;
-            existing.UsuarioId = ticket.UsuarioId;
+            existing.ClienteId = ticket.ClienteId;
             existing.CategoriaId = ticket.CategoriaId;
             existing.EmpleadoAsignadoId = ticket.EmpleadoAsignadoId;
 
