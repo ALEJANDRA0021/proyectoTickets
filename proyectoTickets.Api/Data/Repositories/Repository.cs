@@ -5,7 +5,7 @@ namespace proyectoTickets.Api.Data.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly CompanyContextDB _context;
+        public readonly CompanyContextDB _context;
         private readonly DbSet<T> _dbSet;
 
         public Repository(CompanyContextDB context)
