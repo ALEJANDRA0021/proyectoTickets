@@ -17,10 +17,10 @@ namespace proyectoTickets.Api.Controllers
 
         // GET: api/ComentariosTicket
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ComentarioTicket>>> GetComentarios()
+        public async Task<ActionResult<IEnumerable<ComentarioTicket>>> GetComentarios(int ticketId)
         {
             var comentarios = await _repository.GetAllAsync();
-            return Ok(comentarios);
+            return Ok(comentarios.Where(x =>x.TicketId==ticketId));
         }
 
         // GET: api/ComentariosTicket/5
